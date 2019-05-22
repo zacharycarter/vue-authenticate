@@ -767,23 +767,23 @@ CookieStorage.prototype._setCookie = function _setCookie (cookie) {
   } catch (e) {}
 };
 
-var LocalStorage$1 = function LocalStorage(namespace) {
+var LocalStorage = function LocalStorage(namespace) {
   this.namespace = namespace || null;
 };
 
-LocalStorage$1.prototype.setItem = function setItem (key, value) {
+LocalStorage.prototype.setItem = function setItem (key, value) {
   $window.localStorage.setItem(this._getStorageKey(key), value);
 };
 
-LocalStorage$1.prototype.getItem = function getItem (key) {
+LocalStorage.prototype.getItem = function getItem (key) {
   return $window.localStorage.getItem(this._getStorageKey(key))
 };
 
-LocalStorage$1.prototype.removeItem = function removeItem (key) {
+LocalStorage.prototype.removeItem = function removeItem (key) {
   $window.localStorage.removeItem(this._getStorageKey(key));
 };
 
-LocalStorage$1.prototype._getStorageKey = function _getStorageKey (key) {
+LocalStorage.prototype._getStorageKey = function _getStorageKey (key) {
   if (this.namespace) {
     return [this.namespace, key].join('.')
   }
@@ -823,7 +823,7 @@ SessionStorage.prototype.setItem = function setItem (key, value) {
 };
 
 SessionStorage.prototype.getItem = function getItem (key) {
-  return $window.sessionStorage.getItem(this._getStorageKey(key))
+  return $window.sessionStorage.getItem(this._getStorageKey(key));
 };
 
 SessionStorage.prototype.removeItem = function removeItem (key) {
@@ -832,7 +832,7 @@ SessionStorage.prototype.removeItem = function removeItem (key) {
 
 SessionStorage.prototype._getStorageKey = function _getStorageKey (key) {
   if (this.namespace) {
-    return [this.namespace, key].join('.')
+    return [this.namespace, key].join(".");
   }
   return key;
 };
@@ -843,14 +843,14 @@ function StorageFactory(options) {
       try {
         $window.localStorage.setItem('testKey', 'test');
         $window.localStorage.removeItem('testKey');
-        return new LocalStorage$1(options.storageNamespace)
+        return new LocalStorage(options.storageNamespace)
       } catch(e) {}
 
     case 'sessionStorage':
       try {
         $window.sessionStorage.setItem('testKey', 'test');
         $window.sessionStorage.removeItem('testKey');
-        return new LocalStorage(options.storageNamespace)
+        return new SessionStorage(options.storageNamespace)
       } catch (e) {}
       
     case 'cookieStorage':
